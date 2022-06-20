@@ -6,6 +6,8 @@ import "./App.css"
 import Header from "./components/Header/Header"
 import Instructions from "./components/Instructions/Instructions"
 import Chip from "./components/Chip/Chip"
+import NutritionalLabel from "./components/NutritionalLabel/NutritionalLabel"
+import { nutritionFacts } from "./constants"
 
 // don't move this!
 export const appInfo = {
@@ -28,7 +30,13 @@ export function App() {
 
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
-//  const [selectedRes]
+  const [selectedMenuItem, setSelectedMenuItem] = useState(null);
+
+  const handleOnMenuClick = (menu) => {
+    console.log(currentMenuItems);
+    setSelectedMenuItem(menu);
+  }
+
 
   const handleOnCategoryClick = (cat) => {
    
@@ -85,11 +93,18 @@ export function App() {
         <div className="MenuDisplay display">
           <div className="MenuItemButtons menu-items">
             <h2 className="title">Menu Items</h2>
-            {/* YOUR CODE HERE */}
+            {currentMenuItems.map((menuItem,idx) => (
+            <Chip label={menuItem.item_name} key={idx} onClick={() =>handleOnMenuClick(menuItem)}/>
+            ))}
           </div>
 
           {/* NUTRITION FACTS */}
-          <div className="NutritionFacts nutrition-facts">{/* YOUR CODE HERE */}</div>
+          <div className="NutritionFacts nutrition-facts">
+            
+            {selectedMenuItem ? <NutritionalLabel item={selectedMenuItem}/> : null}
+
+            </div>
+
         </div>
 
         <div className="data-sources">
